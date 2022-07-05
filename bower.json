@@ -1,0 +1,24 @@
+{
+  "name": "achui",
+  "description": "A UI to upload, process, validate, and edit ACH data.",
+  "main": "index.js",
+  "authors": [
+    "Casey Shimata"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/CaseyShimata/ACHUI",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.3",
+    "angular": "^1.8.3",
+    "sir-accordion": "^1.4.2",
+    "json-formatter": "^0.7.0"
+  }
+}
