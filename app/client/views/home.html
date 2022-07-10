@@ -1,9 +1,8 @@
 <body ng-controller="HomeController">
 <div class="container">
-    <div class="d-flex justify-content-center h-100">
+    <div>
         <div class="card">
             <div class="card-body">
-
                 <form>
                     <div class="form-group">
                         <label for="myFileField">Select a file: </label>
@@ -13,16 +12,11 @@
                 </form>
             </div>
         </div>
-        <div>
-            <p> Click to see record and its validation data. Currently not pretty and accordian is not collapsing. <br> This will be in editable text fields only displaying the correct information and the validation messgaes will be in red.</p>
-            <ul ng-repeat="item in serverResponse">
-                <li ng-repeat="(key, val) in item" ng-click="accordion.current = item">
-                    {{key}}
-                    <ul ng-show="accordion.current == item">
-                        <li> {{val}} </li>
-                    </ul>
-                </li>
-            </ul>
+        <div id="achDataContainer">
+            <p>Upload an ACH File. <br>
+                Type `CMD/CTRL` + `f` and search for `didPass": false` <br>
+                This will search for all the errors in the ACH file. </p>
+            <pre id="achData" contenteditable="true">{{serverResponse}}</pre>
         </div>
     </div>
 </div>

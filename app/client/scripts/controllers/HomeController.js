@@ -8,7 +8,7 @@ myApp.controller('HomeController', function ($scope, fileUploadService) {
 
         promise.then(function (response) {
             //todo: map json to JS objects to be more easily consumed on the front end.
-            $scope.serverResponse = response;
+            $scope.serverResponse = angular.toJson(response, true);
             debugger;
         }, function () {
             $scope.serverResponse = 'An error has occurred';
