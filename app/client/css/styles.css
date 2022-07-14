@@ -5,3 +5,9 @@ img{
   max-width: 90%;
   max-height: 20em;
 }
+.didPassFalse{
+  color: red;
+}
+.didPassTrue{
+  color: green;
+}
