@@ -5,18 +5,84 @@
             <div class="card-body">
                 <form>
                     <div class="form-group">
-                        <label for="myFileField">Select a file: </label>
-                        <input type="file" demo-file-model="myFile" class="form-control" id="myFileField"/>
+                        <label for="achFileField">Select a file: </label>
+                        <input type="file" demo-file-model="achFileToUpload" class="form-control" id="achFileField"/>
                     </div>
                     <button ng-click="uploadFile()" class="btn btn-primary">Upload File</button>
                 </form>
             </div>
         </div>
         <div id="achDataContainer">
-            <p>Upload an ACH File. <br>
-                Type `CMD/CTRL` + `f` and search for `didPass": false` <br>
-                This will search for all the errors in the ACH file. </p>
-            <pre id="achData" contenteditable="true">{{serverResponse}}</pre>
+            <ol>
+                <li>Upload an ACH File.</li>
+                <li>Expand the Records and fields review the fields where `didPass": false`.</li>
+                <li>Edit the errors and submit the revised ach file. </li>
+            </ol>
+            <p>Future versions will allow for search, and to move the records and fields around.</p>
+            <form name="submitACHForm" class="form-group">
+                <div class="expandcollapse-item">
+                    <button ng-click="active = !active"
+                         ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">
+                        <H1>ACH Page Number: {{achData.achPageNumber}}</H1>
+                    </button>
+                    <div ng-repeat="(achValidationTestName, achValidationTest) in achData.achValidationTests">
+                        <b>{{achValidationTestName}}</b>
+                        <ul>
+                            <li>{{achValidationTest.message}}</li>
+                            <li ng-class="{'didPassFalse': achValidationTest.didPass === false,
+                                                        'didPassTrue': achValidationTest.didPass === true}">
+                                Pass: {{achValidationTest.didPass}}
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="slideDown" ng-hide="!active">
+                        <div ng-repeat="achRecord in achData.achRecords" class="expand-collapse-content">
+                            <button ng-click="active = !active"
+                                 ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">
+                                <h3>ACH Record Number : {{achRecord.achRecordNumber}}</h3>
+                            </button>
+                            <div ng-repeat="(achValidationTestName, achValidationTest) in achRecord.achValidationTests">
+                                <b>{{achValidationTestName}}</b>
+                                <ul>
+                                    <li>{{achValidationTest.message}}</li>
+                                    <li ng-class="{'didPassFalse': achValidationTest.didPass === false,
+                                                        'didPassTrue': achValidationTest.didPass === true}">
+                                        Pass: {{achValidationTest.didPass}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="slideDown" ng-hide="active">
+                                <div class="expand-collapse-content">
+                                    <div ng-repeat="achField in achRecord.achFields" class="expand-collapse-content">
+                                        <button ng-click="active = !active"
+                                             ng-class="{'expandcollapse-heading-collapsed': active, 'expandcollapse-heading-expanded': !active}">
+                                            <h5>ACH Field Number : {{achField.achFieldRuleNumber}}</h5>
+                                        </button>
+                                        <div class="slideDown" ng-hide="!active">
+                                            <div class="expand-collapse-content">
+                                                currentValue: <input type="text" class='form-control'
+                                                                     ng-model="achField.currentValue" required>
+                                                <div ng-repeat="(achValidationTestName, achValidationTest) in achField.achValidationTests">
+                                                    <b>{{achValidationTestName}}</b>
+                                                    <ul>
+                                                        <li>{{achValidationTest.message}}</li>
+                                                        <li ng-class="{'didPassFalse': achValidationTest.didPass === false,
+                                                        'didPassTrue': achValidationTest.didPass === true}">
+                                                            Pass: {{achValidationTest.didPass}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" type="button" ng-click="submitACH()">Submit</button>
+            </form>
+
         </div>
     </div>
 </div>
